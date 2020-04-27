@@ -54,6 +54,7 @@
     },
     "dependencies": {
         "@ant-design/pro-layout": "^5.0.10",
+        "@types/swagger-ui-react": "^3.23.1",
         "antd": "^3.21.4",
         "axios": "^0.19.2",
         "customize-cra": "^0.9.1",
@@ -70,6 +71,7 @@
         "react-hot-loader": "^4.12.14",
         "react-router-dom": "^5.0.1",
         "react-scripts": "3.4.1",
+        "swagger-ui-react": "^3.25.1",
         "typescript": "^3.6.3"
     }
 }

@@ -52,6 +52,7 @@ export type ProMenuExport = ProMenuType | ProMenuType[];
 
 const menu: RouterTypes[] = [];
 
+// 通过执行require.context函数获取一个特定的上下文,主要用来实现自动化导入模块
 const context = require.context('../pages', true, /\.\/[^/]+\/index\.tsx?$/);
 // 通过文件路径获取
 context.keys().forEach(item => {

@@ -5,17 +5,18 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import useRootStore from '../../models';
 import styles from './RightContent.module.scss';
+import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const RightContent = withRouter(({ history }) => {
   const rootStore = useRootStore();
   const userDropDown = (
     <Menu>
       <Menu.Item key="userCenter">
-        <Icon type="user" />
+        <UserOutlined />
         <span>用户中心</span>
       </Menu.Item>
       <Menu.Item key="userinfo">
-        <Icon type="setting" />
+        <SettingOutlined />
         <span>用户设置</span>
       </Menu.Item>
       <Menu.Item
@@ -25,7 +26,7 @@ const RightContent = withRouter(({ history }) => {
           history.push('/login');
         }}
       >
-        <Icon type="logout" />
+        <LogoutOutlined />
         退出登录
       </Menu.Item>
     </Menu>
