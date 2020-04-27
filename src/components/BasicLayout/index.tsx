@@ -7,7 +7,8 @@ import { hot } from 'react-hot-loader/root';
 import { useObserver } from 'mobx-react-lite';
 import useRootStore from '../../models';
 import menu from '../../models/menu';
-import { Icon } from 'antd';
+import RightContent from './RightContent';
+import './index.module.scss';
 
 console.log(menu);
 
@@ -17,8 +18,7 @@ const BasicLayouts = withRouter(({ location, children }) => {
     <BasicLayout
       title="十点"
       logo={<img src={logo} />}
-      route={{ path: '/', routes: menu }}
-      // rightContentRender={props => <div>123</div>}
+      route={{ routes: menu }}
       menuItemRender={props => (
         // @ts-ignore
         <Link to={props.path} >
@@ -28,6 +28,7 @@ const BasicLayouts = withRouter(({ location, children }) => {
       )}
       location={location}
       footerRender={() => <div>Footer</div>}
+      rightContentRender={() =>  <RightContent />}
       {...rootStore.layoutSettings}
     >
       {children}
