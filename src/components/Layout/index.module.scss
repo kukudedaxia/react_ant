@@ -1,0 +1,28 @@
+.title {
+    font-size: 20px;
+    color: #fff;
+    vertical-align: text-bottom;
+    margin-left: 20px;
+}
+
+.logo {
+    background: url('../../assets/logo.png');
+    height: 90%;
+    background-size: 100% 100%;
+    width: 80px;
+    display: inline-block;
+}
+
+:global {
+    #components-layout-demo-top-side-2 .logo {
+        width: 120px;
+        height: 31px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px 28px 16px 0;
+        float: left;
+    }
+    .site-layout-background {
+        background: #fff;
+        min-height: calc(100vh - 142px);
+    }
+}

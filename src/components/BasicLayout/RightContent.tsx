@@ -1,11 +1,11 @@
-import { Avatar, Dropdown, Icon, Menu } from 'antd';
+import { Avatar, Dropdown, Menu } from 'antd';
 import classnames from 'classnames';
 import { useObserver } from 'mobx-react-lite';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import useRootStore from '../../models';
 import styles from './RightContent.module.scss';
-import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const RightContent = withRouter(({ history }) => {
   const rootStore = useRootStore();
@@ -32,18 +32,11 @@ const RightContent = withRouter(({ history }) => {
     </Menu>
   );
   return useObserver(() => (
-    <div
-      className={classnames(
-        styles.right,
-        styles.dark,
-      )}
-    >
+    <div className={classnames(styles.right, styles.dark)}>
       <Dropdown overlay={userDropDown}>
         <span className={classnames(styles.action, styles.account)}>
-          <Avatar size="small" className={styles.avatar} alt="avatar" icon="user" />
-          <span className={styles.name}>
-            {rootStore.name && rootStore.name}
-          </span>
+          <Avatar size="small" className={styles.avatar} alt="avatar" icon={<UserOutlined />} />
+          <span className={styles.name}>{rootStore.global.name && rootStore.global.name}</span>
         </span>
       </Dropdown>
     </div>

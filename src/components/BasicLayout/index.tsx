@@ -6,11 +6,9 @@ import { withRouter, Link } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 import { useObserver } from 'mobx-react-lite';
 import useRootStore from '../../models';
-import menu from '../../models/menu';
+// import menu from '../../models/menu';
 import RightContent from './RightContent';
 import './index.module.scss';
-
-console.log(menu);
 
 const BasicLayouts = withRouter(({ location, children }) => {
   const rootStore = useRootStore();
@@ -18,18 +16,18 @@ const BasicLayouts = withRouter(({ location, children }) => {
     <BasicLayout
       title="十点"
       logo={<img src={logo} />}
-      route={{ routes: menu }}
+      route={{ routes: rootStore.global.menu }}
       menuItemRender={props => (
         // @ts-ignore
-        <Link to={props.path} >
+        <Link to={props.path}>
           {props.icon && props.icon}
           <span>{props.name}</span>
         </Link>
       )}
       location={location}
       footerRender={() => <div>Footer</div>}
-      rightContentRender={() =>  <RightContent />}
-      {...rootStore.layoutSettings}
+      rightContentRender={() => <RightContent />}
+      {...rootStore.global.layoutSettings}
     >
       {children}
     </BasicLayout>

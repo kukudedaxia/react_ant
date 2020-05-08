@@ -68,6 +68,7 @@ module.exports = {
                 "tsx": "never"
             }
         ],
+        "prettier/prettier": 0,
     },
     //针对特定文件的配置
     overrides: [{

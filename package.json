@@ -55,7 +55,7 @@
     "dependencies": {
         "@ant-design/pro-layout": "^5.0.10",
         "@types/swagger-ui-react": "^3.23.1",
-        "antd": "^3.21.4",
+        "antd": "^4.2.0",
         "axios": "^0.19.2",
         "customize-cra": "^0.9.1",
         "eslint": "^6.4.0",

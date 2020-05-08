@@ -1,9 +1,7 @@
 // @ts-nocheck
 /* eslint-disable no-continue */
-import React, { ComponentType, lazy, Suspense } from 'react';
-import { RouterTypes } from '@ant-design/pro-layout/typings';
-import { hot } from 'react-hot-loader/root';
-import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import React, { ComponentType, Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 export interface ProMenuType {
   /**
@@ -11,8 +9,13 @@ export interface ProMenuType {
    * 由于react-hot-loader的bug，暂时无法使用() => import()方式，只能使用require()
    */
   component?:
-    | (() => Promise<{ default: React.ComponentType<RouteComponentProps> }>)
-    | { default: React.ComponentType<RouteComponentProps> };
+    | (() => Promise<{ default: React.ComponentType }>)
+    | { default: React.ComponentType }
+    | React.LazyExoticComponent<() => JSX.Element>;
+  /**
+   * 设置menuItem key
+   */
+  key?: string;
   /**
    * 菜单跳转路径，如果未设置routePath，则同时也为路由路径
    */
@@ -28,7 +31,7 @@ export interface ProMenuType {
   /**
    * 菜单图表，ant design icon组件
    */
-  icon?: string;
+  icon?: React.ReactNode;
   /**
    * 子菜单
    */
@@ -50,60 +53,35 @@ export interface ProMenuType {
 // 这个是暴露给文件夹下的index设置menu类型
 export type ProMenuExport = ProMenuType | ProMenuType[];
 
-const menu: RouterTypes[] = [];
-
-// 通过执行require.context函数获取一个特定的上下文,主要用来实现自动化导入模块
-const context = require.context('../pages', true, /\.\/[^/]+\/index\.tsx?$/);
-// 通过文件路径获取
-context.keys().forEach(item => {
-  try {
-    const menuItem = context(item).default;
-    if (item === './Home/index.tsx') menu.unshift(menuItem);
-    else if (menuItem instanceof Array) {
-      menu.push(...menuItem);
-    } else {
-      menu.push(menuItem);
-    }
-  } catch (error) {
-    // f
-    console.log(error);
-  }
-});
-
-const processMenuItem = (menuItem: ProMenuType) => {
-  let Component: ComponentType<RouteComponentProps> = ({ children }) => <>{children}</>;
+export const processMenuItem = (menuItem: ProMenuType) => {
+  let WrapperComponent: ComponentType = ({ children }) => <>{children}</>;
   if (menuItem.component) {
     if ('default' in menuItem.component) {
-      Component = menuItem.component.default;
+      WrapperComponent = menuItem.component.default;
     } else {
-      Component = lazy(menuItem.component);
+      WrapperComponent = menuItem.component;
     }
   }
   const children = menuItem.routes ? (
     <Switch>
       {menuItem.routes.map(processMenuItem)}
       {/* ? */}
-      <Redirect to={menuItem.routes[0].path} />
+      <Redirect to={menuItem.routes[0].path || ''} />
     </Switch>
   ) : (
     undefined
   );
+  // Suspense 标签将要进行 lazy（懒加载）的组件进行包裹，然后在 callback 函数中给出加载过程中处理方式，也就是加载过程中的行为。
   return (
     <Route
       path={menuItem.routePath || menuItem.path}
       key={menuItem.routePath || menuItem.path}
       render={props => (
         <Suspense fallback={null}>
-          <Component {...props}>{children}</Component>
+          <WrapperComponent {...props}>{children}</WrapperComponent>
         </Suspense>
       )}
       exact={menuItem.exact}
     />
   );
 };
-
-export const Routes = hot(() => {
-  return <Switch>{menu.map(processMenuItem)}</Switch>;
-});
-
-export default menu;
