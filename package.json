@@ -56,7 +56,7 @@
         "@ant-design/pro-layout": "^5.0.10",
         "@types/swagger-ui-react": "^3.23.1",
         "antd": "^4.2.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "customize-cra": "^0.9.1",
         "eslint": "^6.4.0",
         "less": "^3.11.1",
